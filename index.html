@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de la Olla</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        
+        <div id="pantalla-inicio" class="pantalla">
+            <h1>🍲 El Juego de la Olla</h1>
+            <div class="input-group">
+                <label>Nombre Equipo 1:</label>
+                <input type="text" id="nombre-eq1" value="Equipo A">
+            </div>
+            <div class="input-group">
+                <label>Nombre Equipo 2:</label>
+                <input type="text" id="nombre-eq2" value="Equipo B">
+            </div>
+            <div class="input-group">
+                <label>Palabras por persona (Ej. 4):</label>
+                <input type="number" id="cantidad-palabras" value="4">
+            </div>
+            <button onclick="prepararOlla()">Randomizar Palabras y Empezar</button>
+        </div>
+
+        <div id="pantalla-juego" class="pantalla hidden">
+            <h2 id="turno-equipo">Turno del Equipo A</h2>
+            <div class="timer" id="tiempo">60</div>
+            
+            <div class="tarjeta-palabra">
+                <h1 id="palabra-actual">¿Listos?</h1>
+                <p id="definicion-actual">(La definición aparecerá aquí)</p>
+            </div>
+
+            <div class="controles">
+                <button id="btn-iniciar-turno" onclick="iniciarTurno()">▶️ Iniciar mi minuto</button>
+                <button id="btn-correcto" class="btn-verde hidden" onclick="palabraAdivinada()">✅ ¡Adivinada!</button>
+                <button id="btn-pasar" class="btn-rojo hidden" onclick="pasarPalabra()">⏭️ Pasar</button>
+            </div>
+        </div>
+
+        <div id="pantalla-fin" class="pantalla hidden">
+            <h1>🏁 ¡Olla Vacía! Fin de la Ronda</h1>
+            <div class="marcadores">
+                <h2 id="marcador-eq1">Equipo A: 0</h2>
+                <h2 id="marcador-eq2">Equipo B: 0</h2>
+            </div>
+            <p>Para la siguiente ronda (Mímicas, Una palabra, etc.), vuelvan a meter las palabras en la olla.</p>
+            <button onclick="reiniciarRonda()">Volver a llenar la olla y seguir</button>
+        </div>
+
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    text-align: center;
+}
+
+.container {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    width: 90%;
+    max-width: 500px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.input-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.btn-verde { background-color: #28a745; }
+.btn-rojo { background-color: #dc3545; }
+
+.timer {
+    font-size: 48px;
+    font-weight: bold;
+    color: #e63946;
+    margin: 20px 0;
+}
+
+.tarjeta-palabra {
+    background: #f8f9fa;
+    border: 2px dashed #ccc;
+    padding: 30px 10px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.tarjeta-palabra h1 {
+    font-size: 36px;
+    margin: 0 0 10px 0;
+}
+
+.tarjeta-palabra p {
+    font-size: 16px;
+    color: #666;
+    margin: 0;
+}
+
+.controles {
+    display: flex;
+    gap: 10px;
+}

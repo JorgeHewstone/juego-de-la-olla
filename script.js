@@ -39,20 +39,41 @@ window.onload = () => {
         });
 };
 
-// --- NAVEGACIÓN ENTRE PANTALLAS (CORREGIDA) ---
+// --- NAVEGACIÓN ENTRE PANTALLAS (A PRUEBA DE CLICKS RÁPIDOS) ---
 function cambiarPantalla(idMostrar) {
     document.querySelectorAll('.pantalla').forEach(p => {
-        // Solo afectamos a las pantallas que NO son la que queremos mostrar
+        // 1. Si esta pantalla tiene un temporizador de ocultación pendiente, lo cancelamos de inmediato
+        if (p.dataset.timeoutId) {
+            clearTimeout(Number(p.dataset.timeoutId));
+            p.dataset.timeoutId = "";
+        }
+
+        // 2. Ocultamos las pantallas que no corresponden
         if (p.id !== idMostrar) {
             p.classList.remove('active');
-            setTimeout(() => p.classList.add('hidden'), 400); // Espera la animación de salida
+            
+            // Guardamos la referencia del temporizador en el elemento para poder cancelarlo si es necesario
+            const tId = setTimeout(() => {
+                p.classList.add('hidden');
+                p.dataset.timeoutId = "";
+            }, 400); // 400ms es lo que tarda la animación CSS
+            
+            p.dataset.timeoutId = tId;
         }
     });
     
+    // 3. Mostramos la pantalla objetivo
     const pantalla = document.getElementById(idMostrar);
-    // Mostramos la nueva pantalla inmediatamente quitando el hidden
+    
+    // Si la pantalla de destino tenía un temporizador para ocultarse, lo anulamos para que no se borre solo
+    if (pantalla.dataset.timeoutId) {
+        clearTimeout(Number(pantalla.dataset.timeoutId));
+        pantalla.dataset.timeoutId = "";
+    }
+    
     pantalla.classList.remove('hidden');
-    // Pequeño delay para que la clase active dispare la animación CSS de entrada
+    
+    // Pequeño delay síncrono para asegurar que el navegador registre el flujo de la animación
     setTimeout(() => pantalla.classList.add('active'), 10);
 }
 

@@ -4,52 +4,102 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Juego de la Olla</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
+    <div class="app-container">
         
-        <div id="pantalla-inicio" class="pantalla">
-            <h1>🍲 El Juego de la Olla</h1>
-            <div class="input-group">
-                <label>Nombre Equipo 1:</label>
-                <input type="text" id="nombre-eq1" value="Equipo A">
+        <div id="pantalla-inicio" class="pantalla active">
+            <header class="app-header">
+                <h1>🍲 La Olla</h1>
+                <p>Arma tus equipos y prepara las palabras</p>
+            </header>
+
+            <div class="card form-jugador">
+                <h3>Agregar Participante</h3>
+                <input type="text" id="input-nombre" placeholder="Tu nombre..." autocomplete="off">
+                
+                <div class="selector-equipo">
+                    <label>
+                        <input type="radio" name="equipo" value="A" checked>
+                        <span class="btn-radio equipo-a">Equipo A</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="equipo" value="B">
+                        <span class="btn-radio equipo-b">Equipo B</span>
+                    </label>
+                </div>
+
+                <div class="inputs-palabras">
+                    <input type="text" id="pal-1" placeholder="Palabra 1" autocomplete="off">
+                    <input type="text" id="pal-2" placeholder="Palabra 2" autocomplete="off">
+                    <input type="text" id="pal-3" placeholder="Palabra 3" autocomplete="off">
+                    <input type="text" id="pal-4" placeholder="Palabra 4" autocomplete="off">
+                </div>
+                
+                <div class="acciones-form">
+                    <button onclick="completarPalabrasAlAzar()" class="btn-icon">🎲 Llenar al azar</button>
+                    <button onclick="agregarJugador()" class="btn-primary">➕ Agregar</button>
+                </div>
             </div>
-            <div class="input-group">
-                <label>Nombre Equipo 2:</label>
-                <input type="text" id="nombre-eq2" value="Equipo B">
+
+            <div class="resumen-equipos">
+                <div class="col-equipo" id="col-eq-a">
+                    <h4>Equipo A</h4>
+                    <ul id="lista-equipo-a"></ul>
+                </div>
+                <div class="col-equipo" id="col-eq-b">
+                    <h4>Equipo B</h4>
+                    <ul id="lista-equipo-b"></ul>
+                </div>
             </div>
-            <div class="input-group">
-                <label>Palabras por persona (Ej. 4):</label>
-                <input type="number" id="cantidad-palabras" value="4">
-            </div>
-            <button onclick="prepararOlla()">Randomizar Palabras y Empezar</button>
+
+            <button onclick="iniciarJuegoCompleto()" id="btn-empezar" class="btn-mega hidden">¡Iniciar Juego!</button>
         </div>
 
         <div id="pantalla-juego" class="pantalla hidden">
-            <h2 id="turno-equipo">Turno del Equipo A</h2>
-            <div class="timer" id="tiempo">60</div>
+            <div class="status-bar">
+                <span id="turno-equipo" class="badge">Equipo A: Turno de Jugador</span>
+            </div>
             
-            <div class="tarjeta-palabra">
+            <div class="reloj-container">
+                <div class="timer" id="tiempo">60</div>
+            </div>
+            
+            <div class="card tarjeta-palabra">
                 <h1 id="palabra-actual">¿Listos?</h1>
-                <p id="definicion-actual">(La definición aparecerá aquí)</p>
+                <p id="definicion-actual">Prepárense para empezar</p>
             </div>
 
-            <div class="controles">
-                <button id="btn-iniciar-turno" onclick="iniciarTurno()">▶️ Iniciar mi minuto</button>
-                <button id="btn-correcto" class="btn-verde hidden" onclick="palabraAdivinada()">✅ ¡Adivinada!</button>
-                <button id="btn-pasar" class="btn-rojo hidden" onclick="pasarPalabra()">⏭️ Pasar</button>
+            <div class="controles-juego">
+                <button id="btn-iniciar-turno" class="btn-mega" onclick="iniciarTurno()">▶️ Empezar mi minuto</button>
+                <div id="botones-accion" class="hidden">
+                    <button class="btn-pasar" onclick="pasarPalabra()">⏭️ Pasar</button>
+                    <button class="btn-adivinar" onclick="palabraAdivinada()">✅ ¡Adivinada!</button>
+                </div>
             </div>
         </div>
 
         <div id="pantalla-fin" class="pantalla hidden">
-            <h1>🏁 ¡Olla Vacía! Fin de la Ronda</h1>
-            <div class="marcadores">
-                <h2 id="marcador-eq1">Equipo A: 0</h2>
-                <h2 id="marcador-eq2">Equipo B: 0</h2>
+            <div class="card fin-ronda">
+                <h1>🏁 ¡Olla Vacía!</h1>
+                <p>Fin de la ronda. Aquí están los resultados:</p>
+                
+                <div class="marcadores-finales">
+                    <div class="marcador a">
+                        <h3>Equipo A</h3>
+                        <p id="marcador-eq1" class="puntos">0</p>
+                    </div>
+                    <div class="marcador b">
+                        <h3>Equipo B</h3>
+                        <p id="marcador-eq2" class="puntos">0</p>
+                    </div>
+                </div>
+
+                <p class="instrucciones-siguiente">Vuelvan a meter las palabras para la siguiente ronda (Mímicas, Una palabra, etc.).</p>
+                <button onclick="reiniciarRonda()" class="btn-mega">Siguiente Ronda 🔄</button>
             </div>
-            <p>Para la siguiente ronda (Mímicas, Una palabra, etc.), vuelvan a meter las palabras en la olla.</p>
-            <button onclick="reiniciarRonda()">Volver a llenar la olla y seguir</button>
         </div>
 
     </div>

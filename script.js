@@ -39,16 +39,20 @@ window.onload = () => {
         });
 };
 
-// --- NAVEGACIÓN ENTRE PANTALLAS ---
+// --- NAVEGACIÓN ENTRE PANTALLAS (CORREGIDA) ---
 function cambiarPantalla(idMostrar) {
     document.querySelectorAll('.pantalla').forEach(p => {
-        p.classList.remove('active');
-        setTimeout(() => p.classList.add('hidden'), 400); // Espera la animación
+        // Solo afectamos a las pantallas que NO son la que queremos mostrar
+        if (p.id !== idMostrar) {
+            p.classList.remove('active');
+            setTimeout(() => p.classList.add('hidden'), 400); // Espera la animación de salida
+        }
     });
     
     const pantalla = document.getElementById(idMostrar);
+    // Mostramos la nueva pantalla inmediatamente quitando el hidden
     pantalla.classList.remove('hidden');
-    // Pequeño delay para que la clase active dispare la animación CSS
+    // Pequeño delay para que la clase active dispare la animación CSS de entrada
     setTimeout(() => pantalla.classList.add('active'), 10);
 }
 

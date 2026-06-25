@@ -204,6 +204,7 @@ function sacarPalabra() {
 }
 
 function palabraAdivinada() {
+    if (olla.length === 0) return; // PROTECCIÓN: Evita clicks accidentales si la olla ya se vació
     if (tocaEquipo === 'A') puntosEqA++;
     else puntosEqB++;
 
@@ -212,7 +213,8 @@ function palabraAdivinada() {
 }
 
 function pasarPalabra() {
-    sacarPalabra(); // Saca otra aleatoria sin borrar la actual
+    if (olla.length === 0) return; // PROTECCIÓN: Evita el click si el juego ya terminó
+    sacarPalabra(); 
 }
 
 function finTurno() {
@@ -246,6 +248,29 @@ function finRonda() {
     document.getElementById('marcador-eq2').innerText = puntosEqB;
     
     cambiarPantalla('pantalla-fin');
+
+    // --- LÓGICA DE BLOQUEO DE 5 SEGUNDOS ---
+    const btnSiguiente = document.getElementById('btn-siguiente-ronda');
+    btnSiguiente.disabled = true;          // Desactiva el botón por completo
+    btnSiguiente.style.opacity = "0.5";     // Lo opaca visualmente
+    btnSiguiente.style.cursor = "not-allowed";
+
+    let tiempoBloqueo = 5;
+    btnSiguiente.innerText = `Siguiente Ronda (${tiempoBloqueo}s) 🔄`;
+
+    const intervaloBloqueo = setInterval(() => {
+        tiempoBloqueo--;
+        if (tiempoBloqueo > 0) {
+            btnSiguiente.innerText = `Siguiente Ronda (${tiempoBloqueo}s) 🔄`;
+        } else {
+            // Cuando pasan los 5 segundos, el botón vuelve a la vida
+            clearInterval(intervaloBloqueo);
+            btnSiguiente.disabled = false;
+            btnSiguiente.style.opacity = "1";
+            btnSiguiente.style.cursor = "pointer";
+            btnSiguiente.innerText = "Siguiente Ronda 🔄";
+        }
+    }, 1000);
 }
 
 function reiniciarRonda() {
